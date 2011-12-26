@@ -2,9 +2,29 @@
 <html lang="ja-JP">
 <head>
 <meta charset="UTF-8">
-<title></title>
-<script type="text/javascript" src="http://b.hatena.ne.jp/js/BookmarkCommentViewerAllInOne.js" charset="utf-8"></script>
+<title>RIL+SNS Background Page</title>
+<script type="text/javascript" src="ext_options.js"></script>
+<script type="text/javascript" src="ext_rilplussns_options.js"></script>
+<script type="text/javascript">
+/*
+chrome.extension.sendRequest('options', function(options){
+
+});
+
+*/
+
+chrome.extension.onRequest.addListener(
+	function(data, sender, sendResponse) {
+		var retOptions = {};
+		var optionList = OPTIONS();
+		for (var i in optionList) {
+			var option = optionList[i];
+			retOptions[option.name.substr("EnableSns_".length)] = option.read();
+		}
+		if (sendResponse) sendResponse.apply(null, [retOptions]);
+	}
+);
+</script>
 </head>
 <body></body>
 </html>
-

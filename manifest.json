@@ -1,32 +1,59 @@
 {
-  "name": "ReadItLaterPlusSNS",
+  "name": "ReadItLater+SNS",
   "version": "0.1",
-  "description": "ReadItLater+SNS",
+  "description": "ReadItLater + (Twitter/Facebook/Google +1/Evernote/HatenaBookmark) ",
   "icons":{
     "16" : "img/icon16.png",
     "48" : "img/icon48.png",
     "128": "img/icon128.png"
   },
+  "options_page": "ext_rilplussns_options.html",
   "background_page": "ext_rilplussns_bg.html",
-  "browser_action": {
-    "default_icon": "img/icon19.png",
-    "default_title": "RIL+SNS"
-  },
   "content_scripts": [
     {
-      "matches": ["*://readitlaterlist.com/a/*"],
+      "matches": [
+        "*://readitlaterlist.com/a/*"
+      ],
       "run_at" : "document_start",
       "js"     : [
-        "scripts/jquery-1.7.min.js",
-        "ext_rilplussns_cnt.js"
+        "ext_rilplussns_util.js",
+        "ext_rilplussns_sns.js",
+        "ext_rilplussns_page.js",
+        "ext_rilplussns_page_ril.js"
+      ],
+      "css"    : ["ext_rilplussns.css"]
+    },
+    {
+      "matches": [
+        "*://readitlaterlist.com/read",
+        "*://readitlaterlist.com/unread",
+        "*://readitlaterlist.com/read/*",
+        "*://readitlaterlist.com/unread/*"
+      ],
+      "run_at" : "document_start",
+      "js"     : [
+        "ext_rilplussns_util.js",
+        "ext_rilplussns_sns.js",
+        "ext_rilplussns_page.js",
+        "ext_rilplussns_page_riloldlist.js"
+      ],
+      "css"    : ["ext_rilplussns.css"]
+    },
+    {
+      "matches": [
+        "*://readitlaterlist.com/textview/*"
+      ],
+      "run_at" : "document_start",
+      "js"     : [
+        "ext_rilplussns_util.js",
+        "ext_rilplussns_sns.js",
+        "ext_rilplussns_page.js",
+        "ext_rilplussns_page_riloldtext.js"
       ],
       "css"    : ["ext_rilplussns.css"]
     }
   ],
   "permissions": [
-    "tabs",
-    "clipboardWrite",
-    "*://readitlaterlist.com/*",
-    "*://b.hatena.ne.jp/*"
+    "*://readitlaterlist.com/*"
   ]
 }

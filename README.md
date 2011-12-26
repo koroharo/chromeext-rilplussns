@@ -1,3 +1,3 @@
-ReadItLater Plus SNS - Chrome-Extension
+ReadItLater + SNS - Chrome-Extension
 =======================================
 

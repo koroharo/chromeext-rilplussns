@@ -1,39 +1,117 @@
-div.rilplussns-sub-container {
-	height: 23px;
-	float: left;
+div.rilplussns-icon {
+	/* http://webcodertools.com/imagetobase64converter */
+	background-image: url(data:image/png;base64,iVBORw0KGgoAAAANSUhEUgAAABAAAAAQCAYAAAAf8/9hAAAABHNCSVQICAgIfAhkiAAAAAlwSFlzAAABSgAAAUoB6YX5ogAAABl0RVh0U29mdHdhcmUAd3d3Lmlua3NjYXBlLm9yZ5vuPBoAAACeSURBVDiNY/j//z8DOmZgYPBgYGD4D8Pa2tpnsKn7//8/AxMDEYCPj08DlxxRBuADA28ACyMjowcWcWNkzocPH5hxqDvFyAAJabJAYGDgOoq8wMTExE15GGhra59Fj+cPHz4wX79+nQPGl5GRYZCVlf2KrllISOgF1tTFgJYSLS0tv1CUEvGBYWAACw7xU4GBgeuYmJi4GRigoY0DAAAjvWAX+p1vFQAAAABJRU5ErkJggg==);
+	width: 16px;
+	height: 16px;
+	border: none;
+	background-repeat: no-repeat;
 }
-div.rilplussns-sub-container-hbm {
+
+ul.rilplussns-sns-list {
+	list-style-type: none;
+}
+ul.rilplussns-sns-list > li.rilplussns-sns-container {
+	height: 23px;
+}
+
+
+li.rilplussns-sns-container {
+	margin: 0;
+}
+
+li.rilplussns-sns-container-twtr {
+}
+li.rilplussns-sns-container-fb {
+
+}
+li.rilplussns-sns-container-gplusone {
+
+}
+li.rilplussns-sns-container-evn {
+
+}
+
+
+li.rilplussns-sns-container-hbm {
 	height: 12px;
 	margin-top: 6px;
 	margin-bottom: 5px;
 	float: left;
 }
-
-
-div.rilplussns-container-reader-view {
-	margin-left: 5px;
-	float: right;
-	z-index: 1;
-}
-
-ul#queue li.item div.rilplussns-container-list-view {
-	position: absolute;
-	bottom: 0;
-	left: 63px;
-	margin: 0;
-}
-
-ul#queue li.item.adjusted div.rilplussns-container-list-view {
-	bottom: auto;
-	left: auto;
-	top: 0px;
-	right: 5px;
-}
-
 a.rilplussns-hbm-add-link > img {
 	/* http://webcodertools.com/imagetobase64converter */
 	background-image: url(data:image/gif;base64,R0lGODlhEAAMAJECAP///xhBzv///wAAACH5BAEAAAIALAAAAAAQAAwAAAIjVI6ZBu3/TlNOAovD1JfnDXZJ+IGl1UFlelLpC8WXodSHUAAAOw==);
 	width: 16px;
 	height: 12px;
 	border: none;
+}
+
+li.rilplussns-sns-container-hbm2 {
+}
+
+div.rilplussns-container.rilplussns-hidden {
+	display: none;
+}
+
+div.rilplussns-container-ril-reader-view {
+	position: fixed;
+	right: 0;
+	top: 230px;
+	z-index: 100;
+	padding: 10px;
+	border-top-left-radius: 10px;
+	border-bottom-left-radius: 10px;
+	box-shadow: 0 0 8px 5px rgba(0,0,0,0.06);
+	background: rgba(0, 0, 0, 0.3);
+}
+div.rilplussns-container-ril-reader-view > div.rilplussns-icon {
+	position: relative;
+	top: -5px;
+	left: 0;
+}
+
+#list div.rilplussns-container-rilold-list-view > ul > li {
+	padding: 0;
+	margin-top: 2px;
+	height: auto;
+}
+
+div.rilplussns-container-rilold-text-view {
+	position: fixed;
+	top: 5%;
+	width: 0;
+	z-index: 100;
+	padding: 0;
+}
+div.rilplussns-container-rilold-text-view > ul {
+	position: relative;
+	left: -170px;
+	margin: 0;
+	width: 150px;
+	padding-right: 3px;
+	padding-top: 28px;
+	padding-left: 10px;
+	padding-bottom: 10px;
+	box-shadow: #ddd 0 0 32px 8px inset;
+	border-radius: 5px;
+}
+
+div.rilplussns-container-rilold-text-view > div.rilplussns-icon {
+	position: relative;
+	top: 24px;
+	left: -160px;
+	padding: 0;
+	margin: 0;
+	border: none;
+}
+div.rilplussns-container-rilold-list-view > div.rilplussns-icon {
+	float: left;
+	margin-right: 5px;
+}
+div.rilplussns-container-rilold-list-view > ul {
+	float: left;
+	height: 16px;
+}
+div.rilplussns-container-rilold-list-view > div.rilplussns-clear {
+	clear: both;
 }

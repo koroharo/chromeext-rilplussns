@@ -1,53 +1,10 @@
-if (!jQuery) {
-	throw new Error('jQuery is not found.');
-}
-
-var RIL_URL_PREFIX = 'http://readitlaterlist.com/a';
-
-var QS = function() {
-	if (arguments.length < 1) throw new Error('Not enough arguments');
-	var dom = arguments[0];
-	var args = null;
-	if (dom && dom.querySelector) {
-		args = Array.prototype.slice.call(arguments, 1);
-		if (args.length < 1) throw new Error('Not enough arguments');
-	} else {
-		dom = document;
-		args = arguments;
-	}
-	return dom.querySelector.apply(dom, args);
-}
-var QSA = function() {
-	if (arguments.length < 1) throw new Error('Not enough arguments');
-	var dom = arguments[0];
-	var args = null;
-	if (dom && dom.querySelectorAll) {
-		args = Array.prototype.slice.call(arguments, 1);
-		if (args.length < 1) throw new Error('Not enough arguments');
-	} else {
-		dom = document;
-		args = arguments;
-	}
-	return Array.prototype.slice.call(dom.querySelectorAll.apply(dom, args), 0);
-}
-var DCE = function(n) {
-	var elem = document.createElement(n);
-	elem.classList.add('rilplussns-element');
-	elem.addClass = function() {
-		for (var i in arguments)
-			elem.classList.add('rilplussns-'+arguments[i]);
-	};
-	return elem;
-};
-
-var snsSettingList = [
+var SNS_SETTING_LIST = [
 	{
 	/*
 	<a href="https://twitter.com/share" class="twitter-share-button" data-url="http://example.com" data-text="TweetText" data-hashtags="rilplussns">Tweet</a>
 <script>!function(d,s,id){var js,fjs=d.getElementsByTagName(s)[0];if(!d.getElementById(id)){js=d.createElement(s);js.id=id;js.src="//platform.twitter.com/widgets.js";fjs.parentNode.insertBefore(js,fjs);}}(document,"script","twitter-wjs");</script>
 	*/
 		id: 'twtr',
-		when: ['reader-view'],
 		setup: function(parentElem, url, title, rowTs) {
 
 			var twLink = DCE('a');
@@ -81,7 +38,6 @@ var snsSettingList = [
 	},
 	{
 		id: 'fb',
-		when: ['reader-view'],
 		setup: function(parentElem, url, title, rowTs) {
 			/*
 			<div id="fb-root"></div>
@@ -107,9 +63,9 @@ var snsSettingList = [
 			fbElem.classList.add('fb-like');
 			fbElem.addClass('fb-element');
 			fbElem.setAttribute('data-href', url);
-			fbElem.setAttribute('data-send', 'true');
+			fbElem.setAttribute('data-send', 'false');
 			fbElem.setAttribute('data-layout', 'button_count');
-			fbElem.setAttribute('data-width', '0');
+			fbElem.setAttribute('data-width', '130');
 			fbElem.setAttribute('data-show-faces', 'false');
 			
 			parentElem.appendChild(fbElem);
@@ -132,8 +88,7 @@ var snsSettingList = [
 	},
 	{
 		id: 'gplusone',
-		when: ['reader-view'],
-		setup: function(parentElem, url, title, nowTs) {
+		setup: function(parentElem, url, title, pagePrams) {
 			/*
 				<!-- このタグを +1 ボタンを表示する場所に挿入してください -->
 				<g:plusone size="medium" href="http://creazy.net/2010/09/howto_setup_social_media_button.html"></g:plusone>
@@ -172,8 +127,7 @@ var snsSettingList = [
 	},
 	{
 		id: 'evn',
-		when: ['reader-view'],
-		setup: function(parentElem, url, title, nowTs) {
+		setup: function(parentElem, url, title, pagePrams) {
 			/*
 			<script type="text/javascript" src="http://static.evernote.com/noteit.js"></script>
 			<a href="#"
@@ -184,7 +138,7 @@ var snsSettingList = [
 			
 			var evnLink = DCE('a');
 			evnLink.addClass('evn-link');
-			evnLink.setAttribute('onclick', "Evernote.doClip({contentId:'page_reader'}); return false;");
+			evnLink.setAttribute('onclick', "Evernote.doClip({contentId:'"+pagePrams.contentId+"'}); return false;");
 			
 			var evnImg = DCE('img');
 			evnImg.setAttribute('src', 'http://static.evernote.com/article-clipper.png');
@@ -207,13 +161,12 @@ var snsSettingList = [
 	},
 	{
 		id: 'hbm',
-		when: ['list-view'],
 		HBM_ENTRY_URL : 'http://b.hatena.ne.jp/entry/',
 		HBM_ADD_URL : 'http://b.hatena.ne.jp/entry/add/',
 		HBM_IMAGEL_URL : 'http://b.hatena.ne.jp/entry/image/large/',
 		HBM_IMAGEM_URL : 'http://b.hatena.ne.jp/entry/image/',
 		HBM_IMAGES_URL : 'http://b.hatena.ne.jp/entry/image/small/',
-		setup : function(parentElem, url, title, nowTs) {
+		setup : function(parentElem, url, title, pagePrams) {
 			var hbmEntryUrl = this.HBM_ENTRY_URL + url;
 			var hbmImageUrl = this.HBM_IMAGES_URL + url;
 			var hbmAddUrl = this.HBM_ADD_URL + url;
@@ -242,8 +195,7 @@ var snsSettingList = [
 	},
 	{
 		id: 'hbm2',
-		when: ['reader-view'],
-		setup: function(parentElem, url, title, nowTs) {
+		setup: function(parentElem, url, title, pagePrams) {
 			/*
 				<a
 					href="http://b.hatena.ne.jp/entry/http://creazy.net/2010/09/howto_setup_social_media_button.html"
@@ -287,136 +239,3 @@ var snsSettingList = [
 		},
 	},
 ];
-
-[
-	{
-		id: 'reader-view',
-		targetSelector: 'div.reader_head li.original > a:first-child',
-		_targetSelector: {
-			container:'div.reader_head',
-			link: 'li.original > a:first-child',
-			title: 'h1:first-child',
-			inject: null,
-		},
-		monitorSelector: 'div.text_body > *:first-child',
-	},
-	{
-		id: 'list-view',
-		targetSelector: 'ul#queue > li.item a.link[href^="http"]',
-		_targetSelector: {
-			container:'ul#queue > li.item a.link[href^="http"]',
-			link: null,
-			title: 'span.title > span',
-			inject: null,
-		},
-		monitorSelector: 'ul#queue > li.info',
-	},
-].forEach(function(setting) {
-
-	var timestampProcessed = 0;
-	var nodefound = false;
-	document.addEventListener('DOMNodeInserted', function(e){
-		var _noticeChanged = function() {
-			//console.log('QSA(setting.targetSelector).length:' + QSA(setting.targetSelector).length);
-
-			QSA(setting._targetSelector.container).forEach(function(targetContainerElem) {
-				var targetLinkElem = setting._targetSelector.link
-				            ? QS(targetContainerElem, setting._targetSelector.link)
-				            : targetContainerElem;
-				//var url = targetElem.href;
-				var url = targetLinkElem.href;
-				if (!url) return false;
-
-				var title = setting._targetSelector.title
-				            ? QS(targetContainerElem, setting._targetSelector.title).innerHTML
-				            : targetContainerElem.innerHTML;
-
-				var targetElem = setting._targetSelector.inject
-				            ? QS(targetContainerElem, setting._targetSelector.inject)
-				            : targetLinkElem;
-
-				var containerElem = targetElem.nextSibling;
-
-				var needUpdate = false;
-				if (!containerElem  || !containerElem.classList || !containerElem.classList.contains('rilplussns-container')) {
-					containerElem = DCE('div');
-					containerElem.addClass(
-					    'container',
-					    'container-'+setting.id);
-					targetElem.parentNode.insertBefore(containerElem, targetElem.nextSibling);
-					needUpdate = true;
-				} else {
-					var oldUrl = containerElem.getAttribute('data-rilplussns-url');
-					if (url !== oldUrl) {
-						needUpdate = true;
-					} else {
-						var oldTimestampUpdated = Number(containerElem.getAttribute('data-rilplussns-timestamp-updated'));
-						if (nowTimestamp - oldTimestampUpdated > 10 * 1000) {
-							needUpdate = true;
-						}
-					}
-				}
-
-				if (needUpdate) {
-					console.log('[DOMNodeInserted]['+ setting.targetSelector +']', e.target.constructor.name);
-
-					Array.prototype.slice.call(containerElem.childNodes, 0).forEach(function(cn) {
-						containerElem.removeChild(cn);
-					});
-					containerElem.setAttribute('data-rilplussns-url', url);
-					containerElem.setAttribute('data-rilplussns-timestamp-updated', nowTimestamp);
-					
-					var snsListElem = DCE('div');
-					
-					snsSettingList.forEach(function(snsSetting) {
-						if (snsSetting.when === null
-						  || snsSetting.when && snsSetting.length == 0
-						  || snsSetting.when && snsSetting.when.indexOf(setting.id) === -1) {
-							return;
-						}
-						var subContainerElem = DCE('div');
-						subContainerElem.addClass(
-						    'sub-container'
-						    ,'sub-container-' + snsSetting.id);
-	
-						snsSetting.setup.apply(snsSetting, [subContainerElem, url, title, nowTimestamp]);
-						
-						snsListElem.appendChild(subContainerElem);
-					});
-					containerElem.appendChild(snsListElem);
-				}
-			});
-			return true; // ok
-		};//_noticeChanged
-
-		var oldTimestamp = timestampProcessed;
-		var nowTimestamp = Date.now();
-		timestampProcessed = nowTimestamp;
-		if (nowTimestamp - oldTimestamp < 50 && nodefound) {
-			return;
-		} else {
-			nodefound = false;
-		}
-
-		var monitorElems = QSA(setting.monitorSelector);
-		for (var i in monitorElems) {
-			if (e.target == monitorElems[i]) {
-				var modifiedElement = e.target;
-				if (modifiedElement.nodeType == Node.ELEMENT_NODE
-				 && modifiedElement.classList.contains('rilplussns-element')) {
-					break;
-				} else if (modifiedElement.nodeType = Node.TEXT_NODE
-				        && modifiedElement.parentNode
-				        && modifiedElement.classList
-				        && modifiedElement.classList.contains('rilplussns-element')) {
-					break;
-				}
-
-				//console.log('Found same elements: ' + setting.monitorSelector);
-				nodefound = _noticeChanged();
-				
-				break;
-			}
-		}
-	});
-});
