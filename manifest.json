@@ -1,7 +1,7 @@
 {
   "name": "ReadItLater+SNS",
-  "version": "0.1",
-  "description": "ReadItLater + (Twitter/Facebook/Google +1/Evernote/HatenaBookmark) ",
+  "version": "0.2",
+  "description": "ReadItLater + SNS(Twitter/Facebook/Google+1/Evernote/HatenaBookmark/mixi/tumblr/linkedin/delicious/digg/livedoor clip!/Yahoo! Bookmark) ",
   "icons":{
     "16" : "img/icon16.png",
     "48" : "img/icon48.png",
