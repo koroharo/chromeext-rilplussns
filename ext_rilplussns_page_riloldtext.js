@@ -1,7 +1,7 @@
 insertContainer(SNS_SETTING_LIST, [
 	{
 		id: 'rilold-text-view',
-		sns: ['twtr','fb','gplusone','evn','hbm2'],
+		sns: ['twtr','fb','gplusone', 'mixicheck', 'mixilike','evn', 'tmblr', 'lkin', 'dlcs', 'digg', 'hbm2', 'ldclip', 'yjbm'],
 		snsParams: {
 			'evn': { contentId: 'text_header' },
 		},

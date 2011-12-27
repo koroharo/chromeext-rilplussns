@@ -17,14 +17,23 @@ var insertContainer = function(globalSnsSettingList, pageSettingList) {
 };
 
 var _insertContainer = function(enableSnsSettingList, pageSettingList) {
-
+	var enableSnsSettingMap = {};
+	enableSnsSettingList.forEach(function(snsSetting){
+		enableSnsSettingMap[snsSetting.id] = snsSetting;
+	});
 	pageSettingList.forEach(function(pageSetting) {
 		var timestampProcessed = 0;
 		var nodefound = false;
 		var eventType = pageSetting.useAjax ? 'DOMNodeInserted' : 'load';
-		var snsSettingList = (pageSetting.sns === 'all') ? enableSnsSettingList
+		/*var snsSettingList = (pageSetting.sns === 'all') ? enableSnsSettingList
 		               : pageSetting.sns instanceof Array ? enableSnsSettingList.filter(function(snsSetting) {
 		                 	return pageSetting.sns.indexOf(snsSetting.id) > -1;
+		                 })
+		               : [];
+		*/
+		var snsSettingList = (pageSetting.sns === 'all') ? enableSnsSettingList
+		               : pageSetting.sns instanceof Array ? pageSetting.sns.map(function(snsId){
+		                 	return enableSnsSettingMap[snsId];
 		                 })
 		               : [];
 		pageSetting.snsParams = pageSetting.snsParams ? pageSetting.snsParams : {};
@@ -91,15 +100,17 @@ var _insertContainer = function(enableSnsSettingList, pageSettingList) {
 							snsListElem.addClass('sns-list');
 
 							snsSettingList.forEach(function(snsSetting) {
-								var snsContainerElem = DCE('li');
-								snsContainerElem.addClass(
-								    'sns-container'
-								    ,'sns-container-' + snsSetting.id);
-			
-								snsSetting.setup.apply(snsSetting,
-									[snsContainerElem, url, title, pageSetting.snsParams[snsSetting.id]]);
-								
-								snsListElem.appendChild(snsContainerElem);
+								if (snsSetting) {
+									var snsContainerElem = DCE('li');
+									snsContainerElem.addClass(
+									    'sns-container'
+									    ,'sns-container-' + snsSetting.id);
+				
+									snsSetting.setup.apply(snsSetting,
+										[snsContainerElem, url, title, pageSetting.snsParams[snsSetting.id]]);
+									
+									snsListElem.appendChild(snsContainerElem);
+								}
 							});
 							containerElem.appendChild(snsListElem);
 

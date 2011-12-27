@@ -1,7 +1,7 @@
 insertContainer(SNS_SETTING_LIST, [
 	{
 		id: 'ril-reader-view',
-		sns: ['twtr','fb','gplusone','evn','hbm2'],
+		sns: ['twtr','fb','gplusone', 'mixicheck', 'mixilike','evn', 'tmblr', 'lkin', 'dlcs', 'digg', 'hbm2', 'ldclip', 'yjbm'],
 		snsParams: {
 			'evn': { contentId: 'page_reader' },
 		},
@@ -14,18 +14,4 @@ insertContainer(SNS_SETTING_LIST, [
 		},
 		monitorSelector: 'div.text_body > *:first-child',
 	},
-	/*
-	{
-		id: 'ril-list-view',
-		useAjax: true,
-		sns: ['hbm'],
-		targetSelector: {
-			container:'ul#queue > li.item a.link[href^="http"]',
-			link: null,
-			title: 'span.title > span',
-			inject: null,
-		},
-		monitorSelector: 'ul#queue > li.info',
-	},
-	*/
 ]);
